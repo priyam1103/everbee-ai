@@ -1,11 +1,6 @@
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
-from langserve import add_routes
-from pirate_speak.chain import chain as pirate_speak_chain
-from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-
 import os
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
