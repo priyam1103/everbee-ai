@@ -11,3 +11,5 @@ redis
 google-search-results
 youtube_search
 google-api-python-client
+chromadb
+bs4

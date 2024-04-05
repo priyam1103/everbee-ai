@@ -25,6 +25,10 @@ from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 from langchain_community.utilities import GoogleSearchAPIWrapper
 from langchain_core.tools import Tool
 from fastapi.middleware.cors import CORSMiddleware
+from langchain_community.document_loaders import WebBaseLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
 
 app = FastAPI()
 
@@ -192,7 +196,20 @@ def search_google(keyword: str):
     )
     return tool.run(keyword)
 
-tools = [keyword_trend, db_ll_agent, search_youtube, generate_image, search_google]
+@tool
+def website_retriever(site_url: str, input: str):
+    """Use this tool to search a website link, can answer any question that is asked on it"""
+    loader = WebBaseLoader(site_url)
+    data = loader.load()
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
+    all_splits = text_splitter.split_documents(data)
+    vectorstore = Chroma.from_documents(documents=all_splits, embedding=OpenAIEmbeddings())
+    retriever = vectorstore.as_retriever(k=4)
+    docs = retriever.invoke(input)
+    print(docs)
+    return docs
+
+tools = [keyword_trend, db_ll_agent, search_youtube, generate_image, search_google, website_retriever]
 
 prompt = ChatPromptTemplate.from_messages(
     [
