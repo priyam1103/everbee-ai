@@ -24,8 +24,19 @@ from langchain_community.utilities.google_trends import GoogleTrendsAPIWrapper
 from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 from langchain_community.utilities import GoogleSearchAPIWrapper
 from langchain_core.tools import Tool
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],      
+    allow_headers=["*"], 
+)
 
 os.environ["OPENAI_API_KEY"] = os.environ.get('OPENAI_API_KEY')
 # Uncomment the below to use LangSmith. Not required.
