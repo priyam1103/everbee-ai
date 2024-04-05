@@ -25,11 +25,11 @@ from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 
 app = FastAPI()
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = os.environ.get('OPENAI_API_KEY')
 # Uncomment the below to use LangSmith. Not required.
-os.environ["LANGCHAIN_API_KEY"] = "ls__1507118dac01425c9825e04be325dff0"
+os.environ["LANGCHAIN_API_KEY"] = os.environ.get('LANGCHAIN_API_KEY')
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["SERPAPI_API_KEY"] = "7c7372f05941aee992d1f5dda46326b3f50c8bc39b4d2fcd544887f00b40b2e8"
+os.environ["SERPAPI_API_KEY"] = os.environ.get('SERPAPI_API_KEY')
 
 chat = ChatOpenAI(model="gpt-3.5-turbo-1106")
 db = SQLDatabase.from_uri("postgresql://postgres:Everbee1o123@everbee-stag.ctimiq1vdoms.us-west-1.rds.amazonaws.com:5432/test_migration")
@@ -38,11 +38,11 @@ class UserInput(BaseModel):
     input: str
 
 class SessionIdInput(BaseModel):
-    session_id: str
+    input: str
 
 @app.post("/chat/")
 def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
-    config = {"configurable": {"session_id": session_id.session_id}}
+    config = {"configurable": {"session_id": f"{session_id.input}"}}
     response = conversational_agent_executor.invoke(
                     {
                         "input": f"{user_input.input}",
