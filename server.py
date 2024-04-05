@@ -188,7 +188,7 @@ agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 conversational_agent_executor = RunnableWithMessageHistory(
     agent_executor,
     lambda session_id: RedisChatMessageHistory(
-        session_id, url="redis://localhost:6379"
+        session_id, url=f"{os.environ.get('REDIS_URL')}"
     ),
     input_messages_key="input",
     output_messages_key="output",
