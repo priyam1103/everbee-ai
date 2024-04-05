@@ -22,6 +22,8 @@ from langchain_core.prompts import (
 from langchain_community.tools.google_trends import GoogleTrendsQueryRun
 from langchain_community.utilities.google_trends import GoogleTrendsAPIWrapper
 from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
+from langchain_community.utilities import GoogleSearchAPIWrapper
+from langchain_core.tools import Tool
 
 app = FastAPI()
 
@@ -30,6 +32,8 @@ os.environ["OPENAI_API_KEY"] = os.environ.get('OPENAI_API_KEY')
 os.environ["LANGCHAIN_API_KEY"] = os.environ.get('LANGCHAIN_API_KEY')
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["SERPAPI_API_KEY"] = os.environ.get('SERPAPI_API_KEY')
+os.environ["GOOGLE_CSE_ID"] = os.environ.get('GOOGLE_CSE_ID')
+os.environ["GOOGLE_API_KEY"] = os.environ.get('GOOGLE_API_KEY')
 
 chat = ChatOpenAI(model="gpt-3.5-turbo-1106")
 db = SQLDatabase.from_uri("postgresql://postgres:Everbee1o123@everbee-stag.ctimiq1vdoms.us-west-1.rds.amazonaws.com:5432/test_migration")
@@ -165,8 +169,19 @@ def search_youtube(keyword: str):
     tool = YouTubeSearchTool()
     return tool.run(keyword)
 
-tools = [keyword_trend,db_ll_agent,search_youtube,generate_image]
+@tool
+def search_google(keyword: str):
+    """search_google searches the web for any information, it can you tell anything that no one knows
+        Google Search is a search engine operated by Google. It allows users to search for information on the Internet by entering keywords or phrases. Google Search uses algorithms to analyze and rank websites based on their relevance to the search query. It is the most popular search engine worldwide."""
+    search = GoogleSearchAPIWrapper()
+    tool = Tool(
+        name="google_search",
+        description="Search Google for recent results.",
+        func=search.run,
+    )
+    return tool.run(keyword)
 
+tools = [keyword_trend, db_ll_agent, search_youtube, generate_image, search_google]
 
 prompt = ChatPromptTemplate.from_messages(
     [
