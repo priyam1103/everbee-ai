@@ -198,7 +198,8 @@ def search_google(keyword: str):
 
 @tool
 def website_retriever(site_url: str, input: str):
-    """Use this tool to search a website link, can answer any question that is asked on it"""
+    """Use this tool to search a website link, can answer any question that is asked on it
+        capability to access specific details from any other external websites"""
     loader = WebBaseLoader(site_url)
     data = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
