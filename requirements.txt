@@ -13,3 +13,4 @@ youtube_search
 google-api-python-client
 chromadb
 bs4
+psycopg
