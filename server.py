@@ -12,7 +12,6 @@ from langchain_core.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_core.tools import tool
 from langchain.agents import AgentExecutor, create_openai_tools_agent
-from langchain_community.chat_message_histories import RedisChatMessageHistory
 from langchain_community.agent_toolkits import create_sql_agent
 from langchain_core.prompts import (
     ChatPromptTemplate,
@@ -29,6 +28,9 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
+from langchain_community.chat_message_histories import (
+    PostgresChatMessageHistory,
+)
 
 app = FastAPI()
 
@@ -51,7 +53,7 @@ os.environ["GOOGLE_CSE_ID"] = os.environ.get('GOOGLE_CSE_ID')
 os.environ["GOOGLE_API_KEY"] = os.environ.get('GOOGLE_API_KEY')
 
 chat = ChatOpenAI(model="gpt-3.5-turbo-1106")
-db = SQLDatabase.from_uri("postgresql://postgres:Everbee1o123@everbee-stag.ctimiq1vdoms.us-west-1.rds.amazonaws.com:5432/test_migration")
+db = SQLDatabase.from_uri(os.environ.get('DB_URI'))
 
 class UserInput(BaseModel):
     input: str
@@ -231,8 +233,8 @@ agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
 conversational_agent_executor = RunnableWithMessageHistory(
     agent_executor,
-    lambda session_id: RedisChatMessageHistory(
-        session_id, url=f"{os.environ.get('REDIS_URL')}"
+    lambda session_id: PostgresChatMessageHistory(
+        session_id=session_id, connection_string=os.environ.get('DB_URI'),
     ),
     input_messages_key="input",
     output_messages_key="output",
