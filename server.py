@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from typing import Optional
 import os
@@ -77,7 +77,7 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     return {"response": response['output']}
 
 @app.post("/user/threads")
-def chat_with_agent(user_email: UserEmailInput):
+def get_all_threads(user_email: UserEmailInput):
     conn = psycopg2.connect(os.environ.get('DB_URI'))
     cur = conn.cursor()
     user_email = f"{user_email.input}"
@@ -94,7 +94,33 @@ def chat_with_agent(user_email: UserEmailInput):
     cur.close()
     conn.close()
 
-    return {"response": records}
+    columns = [desc[0] for desc in cur.description]
+    response = [dict(zip(columns, record)) for record in records]
+
+    return {"response": response}
+
+@app.get("/user/thread")
+def get_single_thread_chat(session_id: str = Query(..., description="The session ID to fetch chat messages for")):
+    conn = psycopg2.connect(os.environ.get('DB_URI'))
+    cur = conn.cursor()
+
+    query = """
+    SELECT *
+    FROM message_store
+    WHERE session_id = %s
+    ORDER BY created_at ASC
+    """
+    cur.execute(query, (session_id,))
+
+    records = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # Convert records to a list of dicts
+    columns = [desc[0] for desc in cur.description]
+    response = [dict(zip(columns, record)) for record in records]
+
+    return {"response": response}
 
 @tool
 def db_ll_agent(user_input):
