@@ -31,6 +31,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.chat_message_histories import (
     PostgresChatMessageHistory,
 )
+import psycopg2
 
 app = FastAPI()
 
@@ -61,6 +62,9 @@ class UserInput(BaseModel):
 class SessionIdInput(BaseModel):
     input: str
 
+class UserEmailInput(BaseModel):
+    input: str
+
 @app.post("/chat/")
 def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     config = {"configurable": {"session_id": f"{session_id.input}"}}
@@ -71,6 +75,26 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
                     config=config
                 )
     return {"response": response['output']}
+
+@app.post("/user/threads")
+def chat_with_agent(user_email: UserEmailInput):
+    conn = psycopg2.connect(os.environ.get('DB_URI'))
+    cur = conn.cursor()
+    user_email = f"{user_email.input}"
+
+    query = """
+    SELECT DISTINCT ON (session_id) *
+    FROM message_store
+    WHERE session_id LIKE '%{}%'
+    ORDER BY session_id, record_timestamp DESC
+    """.format(user_email)
+
+    cur.execute(query)
+    records = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    return {"response": records}
 
 @tool
 def db_ll_agent(user_input):
