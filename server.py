@@ -76,11 +76,10 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
                 )
     return {"response": response['output']}
 
-@app.post("/user/threads")
-def get_all_threads(user_email: UserEmailInput):
+@app.get("/user/threads")
+def get_all_threads(user_email: str = Query(..., description="User email")):
     conn = psycopg2.connect(os.environ.get('DB_URI'))
     cur = conn.cursor()
-    user_email = f"{user_email.input}"
 
     query = """
     SELECT DISTINCT ON (session_id) *
