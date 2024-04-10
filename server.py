@@ -86,7 +86,7 @@ def chat_with_agent(user_email: UserEmailInput):
     SELECT DISTINCT ON (session_id) *
     FROM message_store
     WHERE session_id LIKE '%{}%'
-    ORDER BY session_id, record_timestamp DESC
+    ORDER BY session_id, created_at DESC
     """.format(user_email)
 
     cur.execute(query)
