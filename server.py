@@ -95,7 +95,7 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     columns = [desc[0] for desc in cur.description]
     thread = [dict(zip(columns, record)) for record in records]
 
-    return {"response": response['output'], "thread_info": thread[0]}
+    return {"response": response['output'], "created_at": thread[0]["created_at"], "thread_info": thread[0]}
 
 @app.get("/user/threads")
 def get_all_threads(user_email: str = Query(..., description="User email")):
