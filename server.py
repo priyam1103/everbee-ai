@@ -74,6 +74,7 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
                     },
                     config=config
                 )
+    
     conn = psycopg2.connect(os.environ.get('DB_URI'))
     cur = conn.cursor()
 
@@ -92,8 +93,8 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     # Convert records to a list of dicts
     columns = [desc[0] for desc in cur.description]
     thread = [dict(zip(columns, record)) for record in records]
-    
-    return {"response": response['output'], thread: thread}
+
+    return {"response": response['output'], "thread": thread}
 
 @app.get("/user/threads")
 def get_all_threads(user_email: str = Query(..., description="User email")):
