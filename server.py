@@ -79,10 +79,11 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     cur = conn.cursor()
 
     query = """
-    SELECT *
-    FROM message_store
-    WHERE session_id = %s
-    ORDER BY created_at ASC
+        SELECT *
+        FROM message_store
+        WHERE session_id = %s
+        ORDER BY created_at DESC
+        LIMIT 1
     """
     cur.execute(query, (session_id.input,))
 
@@ -94,7 +95,7 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     columns = [desc[0] for desc in cur.description]
     thread = [dict(zip(columns, record)) for record in records]
 
-    return {"response": response['output'], "thread": thread}
+    return {"response": response['output'], "thread_info": thread[0]}
 
 @app.get("/user/threads")
 def get_all_threads(user_email: str = Query(..., description="User email")):
