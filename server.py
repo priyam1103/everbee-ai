@@ -74,7 +74,26 @@ def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
                     },
                     config=config
                 )
-    return {"response": response['output']}
+    conn = psycopg2.connect(os.environ.get('DB_URI'))
+    cur = conn.cursor()
+
+    query = """
+    SELECT *
+    FROM message_store
+    WHERE session_id = %s
+    ORDER BY created_at ASC
+    """
+    cur.execute(query, (session_id.input,))
+
+    records = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # Convert records to a list of dicts
+    columns = [desc[0] for desc in cur.description]
+    thread = [dict(zip(columns, record)) for record in records]
+    
+    return {"response": response['output'], thread: thread}
 
 @app.get("/user/threads")
 def get_all_threads(user_email: str = Query(..., description="User email")):
