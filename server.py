@@ -314,7 +314,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """f{email}""",
+            """My email id: {email}""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
