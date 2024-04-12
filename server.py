@@ -146,12 +146,31 @@ def get_single_thread_chat(session_id: str = Query(..., description="The session
 
     return {"response": response}
 
-def fetch_user_details(user_id):
+def fetch_user_details(email):
     # Assuming you have a function to get user details from a database
     # This is a placeholder for the actual implementation
+    conn = psycopg2.connect(os.environ.get('DB_URI'))
+    cur = conn.cursor()
+
+    query = """
+        SELECT *
+        FROM users
+        WHERE email = %s
+        ORDER BY created_at DESC
+        LIMIT 1
+    """
+    cur.execute(query, (email,))
+
+    records = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # Convert records to a list of dicts
+    columns = [desc[0] for desc in cur.description]
+    user = [dict(zip(columns, record)) for record in records]
+    print(user)
     return {
-        "name": "John Doe",
-        "last_interaction": "discussing project updates"
+        "user_info": user[0],
     }
 
 def extract_email(s):
@@ -314,7 +333,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """My email id: {email}""",
+            f"""Current user information: {fetch_user_details("{email}")}""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
