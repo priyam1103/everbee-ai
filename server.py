@@ -171,19 +171,12 @@ def fetch_user_details(email):
         "user_info": user[0],
     }
 
-def extract_email(s):
-    # Regular expression pattern for finding email
-    email_pattern = r"\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b"
+def extract_last_segment(s):
+    # Split the string by hyphen
+    parts = s.split('-')
     
-    # Search for the pattern in the input string
-    match = re.search(email_pattern, s)
-    
-    # If a match is found, return the email
-    if match:
-        return match.group(0)
-    else:
-        # Return None if no email is found
-        return None
+    # Return the last element of the list
+    return parts[-1]
 
 @tool
 def db_ll_agent(user_input):
@@ -331,7 +324,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            f"""Current user information: {fetch_user_details("{email}")}""",
+            f"""Current user information: {fetch_user_details("""{email}""")}""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
