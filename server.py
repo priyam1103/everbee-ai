@@ -214,6 +214,8 @@ def db_ll_agent(user_input):
     ALWAYS keep in mind -
         user has_many sales_channels and sales_channels has_one shops and shops has_many listings
         user is not directly connected to listings
+        shop is not directly connected to user
+        To get shop details  user has_many sales_channels and sales_channels has_one shops and shops has_many listings
 
     Here are some examples of user inputs and their corresponding SQL queries:
 
