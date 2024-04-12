@@ -156,7 +156,7 @@ def fetch_user_details(user_id):
 
 def extract_email(s):
     # Regular expression pattern for finding email
-    email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+    email_pattern = r"\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b"
     
     # Search for the pattern in the input string
     match = re.search(email_pattern, s)
@@ -165,7 +165,7 @@ def extract_email(s):
     if match:
         return match.group(0)
     else:
-        # Return None or raise an error if no email is found
+        # Return None if no email is found
         return None
 
 @tool
