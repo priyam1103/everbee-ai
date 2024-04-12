@@ -162,14 +162,18 @@ def fetch_user_details(email):
     records = cur.fetchall()
     cur.close()
     conn.close()
+    columns = [desc[0] for desc in cur.description]
 
     # Convert records to a list of dicts
-    columns = [desc[0] for desc in cur.description]
-    user = [dict(zip(columns, record)) for record in records]
-    print(user)
-    return {
-        "user_info": user[0],
-    }
+    if records:
+        # Convert records to a list of dictionaries
+        users = [dict(zip(columns, record)) for record in records]
+        # Return the first user's information
+        return {"user_info": users[0]}
+    else:
+        # Handle the case where no records are found
+        print("No user found")
+        return {"user_info": None}
 
 def extract_last_segment(s):
     # Split the string by hyphen
@@ -324,7 +328,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            f"""Current user information: {fetch_user_details("""{email}""")}""",
+            f"""Current user information: {fetch_user_details('{email}')}""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
