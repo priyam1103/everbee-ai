@@ -71,10 +71,12 @@ class UserEmailInput(BaseModel):
 def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     config = {"configurable": {"session_id": f"{session_id.input}"}}
     email = extract_last_segment(session_id.input)
+    user_info = fetch_user_details(email)
     response = conversational_agent_executor.invoke(
                     {
                         "input": f"{user_input.input}",
-                        "email": f"{email}"
+                        "email": f"{email}",
+                        "user_info": f"{user_info}"
                     },
                     config=config
                 )
@@ -328,7 +330,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            f"""Current user information: {fetch_user_details('{email}')}""",
+            """Current user information: {user_info}""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
