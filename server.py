@@ -151,13 +151,11 @@ def fetch_user_details(email):
     # This is a placeholder for the actual implementation
     conn = psycopg2.connect(os.environ.get('DB_URI'))
     cur = conn.cursor()
-
+    print(email)
     query = """
         SELECT *
         FROM users
         WHERE email = %s
-        ORDER BY created_at DESC
-        LIMIT 1
     """
     cur.execute(query, (email,))
 
