@@ -2,6 +2,8 @@ from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from typing import Optional
 import os
+import re
+
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -68,9 +70,11 @@ class UserEmailInput(BaseModel):
 @app.post("/chat/")
 def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     config = {"configurable": {"session_id": f"{session_id.input}"}}
+    email = extract_email(session_id.input)
     response = conversational_agent_executor.invoke(
                     {
                         "input": f"{user_input.input}",
+                        "email": f"{email}"
                     },
                     config=config
                 )
@@ -141,6 +145,28 @@ def get_single_thread_chat(session_id: str = Query(..., description="The session
     response = [dict(zip(columns, record)) for record in records]
 
     return {"response": response}
+
+def fetch_user_details(user_id):
+    # Assuming you have a function to get user details from a database
+    # This is a placeholder for the actual implementation
+    return {
+        "name": "John Doe",
+        "last_interaction": "discussing project updates"
+    }
+
+def extract_email(s):
+    # Regular expression pattern for finding email
+    email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+    
+    # Search for the pattern in the input string
+    match = re.search(email_pattern, s)
+    
+    # If a match is found, return the email
+    if match:
+        return match.group(0)
+    else:
+        # Return None or raise an error if no email is found
+        return None
 
 @tool
 def db_ll_agent(user_input):
@@ -288,7 +314,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """Hello how are you?""",
+            """f{email}""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
