@@ -70,7 +70,7 @@ class UserEmailInput(BaseModel):
 @app.post("/chat/")
 def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     config = {"configurable": {"session_id": f"{session_id.input}"}}
-    email = extract_email(session_id.input)
+    email = extract_last_segment(session_id.input)
     response = conversational_agent_executor.invoke(
                     {
                         "input": f"{user_input.input}",
