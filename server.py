@@ -3,7 +3,8 @@ from pydantic import BaseModel
 from typing import Optional
 import os
 import re
-
+import redis
+import json
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -55,6 +56,8 @@ os.environ["SERPAPI_API_KEY"] = os.environ.get('SERPAPI_API_KEY')
 os.environ["GOOGLE_CSE_ID"] = os.environ.get('GOOGLE_CSE_ID')
 os.environ["GOOGLE_API_KEY"] = os.environ.get('GOOGLE_API_KEY')
 
+redis_s = redis.Redis.from_url(os.environ.get('REDIS_URL'), decode_responses=True)
+
 chat = ChatOpenAI(model="gpt-3.5-turbo-1106")
 db = SQLDatabase.from_uri(os.environ.get('DB_URI'))
 
@@ -71,7 +74,7 @@ class UserEmailInput(BaseModel):
 def chat_with_agent(user_input: UserInput, session_id: SessionIdInput):
     config = {"configurable": {"session_id": f"{session_id.input}"}}
     email = extract_last_segment(session_id.input)
-    user_info = fetch_user_details(email)
+    user_info = cached_fetch_user_details(email)
     print(user_info)
     response = conversational_agent_executor.invoke(
                     {
@@ -148,6 +151,22 @@ def get_single_thread_chat(session_id: str = Query(..., description="The session
     response = [dict(zip(columns, record)) for record in records]
 
     return {"response": response}
+
+def cached_fetch_user_details(email):
+    # Try to get the cached data
+    cached_user = redis_s.get(email)
+    if cached_user:
+        print("Fetching from cache")
+        return json.loads(cached_user)
+
+    # If not cached, fetch the data from the primary source
+    print("Fetching from the database")
+    user_info = fetch_user_details(email)  # Replace with your actual function to fetch data
+
+    # Cache the data for future use, set expiration as needed
+    redis_s.set(email, json.dumps(user_info), ex=3600)  # Cache for 1 hour; adjust as needed
+
+    return user_info
 
 def fetch_user_details(email):
     # Assuming you have a function to get user details from a database
