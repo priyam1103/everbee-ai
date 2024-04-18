@@ -5,6 +5,8 @@ import os
 import re
 import redis
 import json
+from datetime import datetime
+
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -39,6 +41,15 @@ import psycopg2
 app = FastAPI()
 
 origins = ["*"]
+
+class DateTimeEncoder(json.JSONEncoder):
+    """ Custom encoder for datetime objects """
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            # Represent datetime object as a ISO formatted string
+            return obj.isoformat()
+        return super().default(obj)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -164,7 +175,7 @@ def cached_fetch_user_details(email):
     user_info = fetch_user_details(email)  # Replace with your actual function to fetch data
 
     # Cache the data for future use, set expiration as needed
-    redis_s.set(email, json.dumps(user_info), ex=3600)  # Cache for 1 hour; adjust as needed
+    redis_s.set(email, json.dumps(user_info, cls=DateTimeEncoder), ex=3600)  # Cache for 1 hour; adjust as needed
 
     return user_info
 
