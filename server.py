@@ -363,7 +363,9 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """Current user information: {user_info}""",
+            """
+            You are a helpful assistant. Answer all questions to the best of your ability. Please use provided user information to know the user better.
+            Current user information: {user_info}""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
