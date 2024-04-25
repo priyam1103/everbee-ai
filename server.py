@@ -231,11 +231,11 @@ def fetch_user_details(email):
         JOIN
             shops s ON sc.shop_id = s.id
         WHERE
-            u.email = 'vaibhav@everbee.io'
+            u.email = %s
         GROUP BY
             u.email;
     """
-    cur.execute(query1)
+    cur.execute(query1, (email,))
 
     records1 = cur.fetchall()
     columns1 = [desc[0] for desc in cur.description]
