@@ -37,18 +37,21 @@ from langchain_community.chat_message_histories import (
     PostgresChatMessageHistory,
 )
 import psycopg2
+from decimal import Decimal
+from json import JSONEncoder
 
 app = FastAPI()
 
 origins = ["*"]
 
-class DateTimeEncoder(json.JSONEncoder):
-    """ Custom encoder for datetime objects """
+class DateTimeEncoder(JSONEncoder):
+    """Custom encoder for datetime and Decimal types for JSON serialization."""
     def default(self, obj):
         if isinstance(obj, datetime):
-            # Represent datetime object as a ISO formatted string
             return obj.isoformat()
-        return super().default(obj)
+        elif isinstance(obj, Decimal):
+            return float(obj)  # or str(obj) if you want to avoid potential floating-point issues
+        return JSONEncoder.default(self, obj)
 
 
 app.add_middleware(
