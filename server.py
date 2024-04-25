@@ -177,7 +177,24 @@ def cached_fetch_user_details(email):
     # Cache the data for future use, set expiration as needed
     redis_s.set(email, json.dumps(user_info, cls=DateTimeEncoder), ex=3600)  # Cache for 1 hour; adjust as needed
 
-    return user_info
+    user_info_p = f"""Activate Buzz AI with the following user and shop-specific details to provide tailored e-commerce assistance for Etsy shop optimization and growth. Buzz AI is designed to empower Etsy shop owners with personalized, data-driven advice, enhancing their shop performance and user engagement on the Etsy platform.
+                    **User and Shop-Specific Details:**
+                    {user_info}
+                    **Capabilities and Interaction Guidelines:**
+                    1. Use the shop-specific details to provide insights on sales trends, product performance, and optimization opportunities.
+                    2. Advise on listing enhancements, marketing strategies, and customer engagement tactics based on current e-commerce and Etsy-specific trends.
+                    3. Maintain an approachable, supportive tone, offering clear and concise advice to ensure recommendations are actionable and effective.
+                    4. Adapt responses to user queries, employing the detailed shop information to offer personalized guidance and solutions.
+                    **Tone and Engagement:**
+                    - Buzz AI should be friendly and encouraging, fostering a positive interaction environment.
+                    - Advice should be delivered in a straightforward manner, avoiding unnecessary complexity or jargon.
+                    - Responses should be tailored to the user's specific situation, with a focus on actionable insights and strategies.
+                    **Upon Receiving a Query, Buzz AI Will:**
+                    1. Assess the query in the context of the provided shop-specific details and the user's unique needs.
+                    2. Deliver customized advice and insights aimed at addressing the query, leveraging the detailed shop information for precision.
+                    3. Encourage further dialogue and provide additional clarification as needed, ensuring the user feels fully supported and informed.
+                    This comprehensive prompt equips Buzz AI to act as a valuable resource for Etsy shop owners, combining in-depth shop analysis with expert e-commerce advice to drive shop growth and enhance user engagement."""
+    return user_info_p
 
 def fetch_user_details(email):
     # Assuming you have a function to get user details from a database
@@ -193,16 +210,44 @@ def fetch_user_details(email):
     cur.execute(query, (email,))
 
     records = cur.fetchall()
+    columns = [desc[0] for desc in cur.description]
+
+    query1 = """
+        SELECT
+            u.email AS "UserEmail",
+            STRING_AGG(s.shop_name, ', ') AS "ShopNames",
+            SUM(s.transaction_sold_count) AS "AnnualSales",
+            SUM(s.listing_active_count) AS "ListingsCount",
+            SUM(s.revenue) AS "AnnualRevenue",
+            AVG(s.review_average) AS "AverageReviewScore",
+            AVG(s.shop_age_month) AS "UserAge"
+        FROM
+            users u
+        JOIN
+            sales_channels sc ON u.id = sc.user_id
+        JOIN
+            shops s ON sc.shop_id = s.id
+        WHERE
+            u.email = 'vaibhav@everbee.io'
+        GROUP BY
+            u.email;
+    """
+    cur.execute(query1)
+
+    records1 = cur.fetchall()
+    columns1 = [desc[0] for desc in cur.description]
+
     cur.close()
     conn.close()
-    columns = [desc[0] for desc in cur.description]
+    
 
     # Convert records to a list of dicts
     if records:
         # Convert records to a list of dictionaries
         users = [dict(zip(columns, record)) for record in records]
+        shops = [dict(zip(columns1, record)) for record in records1]
         # Return the first user's information
-        return {"user_info": users[0]}
+        return {"user_info": users[0], "shop_info": shops[0]}
     else:
         # Handle the case where no records are found
         print("No user found")
