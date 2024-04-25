@@ -264,7 +264,7 @@ def extract_last_segment(s):
     return parts[-1]
 
 @tool
-def db_ll_agent(user_input):
+def db_ll_agent(user_input, email: str):
     """The SQL Query Agent is designed to interact with a SQL database to answer user queries. It generates syntactically correct SQL queries in a specific dialect and executes them to retrieve relevant information. The agent is constrained to select queries and is programmed to ensure efficient and secure access to the database.
        user has_many sales_channels and sales_channels has_one shop and shop has_many listings"""
 
@@ -348,7 +348,7 @@ def db_ll_agent(user_input):
             AND l.cached_est_mo_sales > 20
             ORDER BY l.cached_est_mo_sales DESC;       
 
- 
+    User Email: {email}
     Human: {user_input}"""
     print(qq)
     out = agent.invoke(qq)
