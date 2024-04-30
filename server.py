@@ -412,7 +412,7 @@ def load_mappings(file_path):
     
 @tool
 def get_listing_info(input: str):
-    """Use this tool to effortlessly access and interact with listing database and only give information about listings. """
+    """Use this tool to effortlessly interact with listing database and only give information about listings. """
 
     mappinngs = load_mappings('mappings.json')
 
