@@ -36,6 +36,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.chat_message_histories import (
     PostgresChatMessageHistory,
 )
+from elasticsearch import Elasticsearch
 import psycopg2
 from decimal import Decimal
 from json import JSONEncoder
@@ -405,7 +406,41 @@ def website_retriever(site_url: str, input: str):
     print(docs)
     return docs
 
-tools = [keyword_trend, db_ll_agent, search_youtube, generate_image, search_google, website_retriever]
+def load_mappings(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
+    
+@tool
+def get_listing_info(input: str):
+    """Use this tool to effortlessly access and interact with listing details through natural language queries, leveraging Elasticsearch for real-time insights.
+        With intuitive natural language processing, discover trends, extract metrics, and gain actionable insights from your listings data, all with simple commands."""
+
+    mappinngs = load_mappings('mappings.json')
+
+    mappings_string = json.dumps(mappinngs, indent=4)
+
+    client = Elasticsearch(
+        os.environ.get('ES_URL'),
+        basic_auth=(os.environ.get('ES_USERNAME'), os.environ.get('ES_PASS'))
+    )
+
+    template = f"""Given the mapping delimited by triple backticks ```{mappings_string}``` translate the text delimited by triple quotes in a valid Elasticsearch DSL query '''{input}''' Give me only the json code part of the answer. Compress the json output removing spaces."""
+    print(template)
+    query_terms = chat.invoke(template)
+    generated_query = query_terms.content
+
+    es_query = generated_query
+    print(es_query)
+
+    response = client.search(
+        index="listings_development",
+        body=es_query
+    )
+
+    for hit in response['hits']['hits']:
+        print(hit['_score'], hit['_source']['title'], hit['_source']['cached_est_mo_revenue'])
+
+tools = [keyword_trend, db_ll_agent, search_youtube, generate_image, search_google, website_retriever, get_listing_info]
 
 prompt = ChatPromptTemplate.from_messages(
     [

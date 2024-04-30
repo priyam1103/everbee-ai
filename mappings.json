@@ -1,0 +1,221 @@
+{    "mappings": {
+    "properties": {
+    "approach": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "cached_conversion_rate": {
+        "type": "float"
+    },
+    "cached_data_updated_at": {
+        "type": "date"
+    },
+    "cached_est_mo_revenue": {
+        "type": "long"
+    },
+    "cached_est_mo_sales": {
+        "type": "long"
+    },
+    "cached_est_reviews": {
+        "type": "long"
+    },
+    "cached_est_reviews_in_months": {
+        "type": "long"
+    },
+    "cached_est_total_sales": {
+        "type": "long"
+    },
+    "cached_listing_age_in_months": {
+        "type": "long"
+    },
+    "cached_tags_used": {
+        "type": "long"
+    },
+    "cached_title_character_count": {
+        "type": "long"
+    },
+    "cached_visibility_score": {
+        "type": "long"
+    },
+    "created_at": {
+        "type": "date"
+    },
+    "currency_code": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "digital_listing_count": {
+        "type": "long"
+    },
+    "featured_rank": {
+        "type": "long"
+    },
+    "has_variations": {
+        "type": "boolean"
+    },
+    "is_customizable": {
+        "type": "boolean"
+    },
+    "is_personalizable": {
+        "type": "boolean"
+    },
+    "is_supply": {
+        "type": "boolean"
+    },
+    "listing_active_count": {
+        "type": "long"
+    },
+    "listing_id": {
+        "type": "long"
+    },
+    "listing_type": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "main_category": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "num_favorers": {
+        "type": "long"
+    },
+    "price": {
+        "type": "float"
+    },
+    "processing_min": {
+        "type": "long"
+    },
+    "quantity": {
+        "type": "long"
+    },
+    "review_count": {
+        "type": "long"
+    },
+    "shipping_from_country_iso": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "shop_age_month": {
+        "type": "long"
+    },
+    "shop_id": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "shop_name": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "shop_section_id": {
+        "type": "long"
+    },
+    "should_auto_renew": {
+        "type": "boolean"
+    },
+    "state": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "sub_category": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "tags": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "title": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "transaction_sold_count": {
+        "type": "long"
+    },
+    "url": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "views": {
+        "type": "long"
+    },
+    "when_made": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    },
+    "who_made": {
+        "type": "text",
+        "fields": {
+        "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+        }
+        }
+    }
+    }
+}
+}
