@@ -412,7 +412,7 @@ def load_mappings(file_path):
     
 @tool
 def get_listing_info(input: str):
-    """Use this tool to effortlessly access and interact with listing details through natural language queries, leveraging Elasticsearch for real-time insights.
+    """Use this tool to effortlessly access and interact with listing database.
         With intuitive natural language processing, discover trends, extract metrics, and gain actionable insights from your listings data, all with simple commands."""
 
     mappinngs = load_mappings('mappings.json')
@@ -436,9 +436,12 @@ def get_listing_info(input: str):
         index="listings_development",
         body=es_query
     )
-
+    res=[]
     for hit in response['hits']['hits']:
         print(hit['_score'], hit['_source']['title'], hit['_source']['cached_est_mo_revenue'])
+        res.append(hit['_score'], hit['_source']['title'], hit['_source']['cached_est_mo_revenue'])
+
+    return res
 
 tools = [keyword_trend, search_youtube, generate_image, search_google, website_retriever, get_listing_info]
 
