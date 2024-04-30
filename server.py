@@ -440,7 +440,7 @@ def get_listing_info(input: str):
     for hit in response['hits']['hits']:
         print(hit['_score'], hit['_source']['title'], hit['_source']['cached_est_mo_revenue'])
 
-tools = [keyword_trend, db_ll_agent, search_youtube, generate_image, search_google, website_retriever, get_listing_info]
+tools = [keyword_trend, search_youtube, generate_image, search_google, website_retriever, get_listing_info]
 
 prompt = ChatPromptTemplate.from_messages(
     [
