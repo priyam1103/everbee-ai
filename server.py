@@ -449,7 +449,15 @@ prompt = ChatPromptTemplate.from_messages(
         (
             "system",
             """
-            {user_info}""",
+            {user_info}
+            
+            use the keyword_trend tool for keyword information
+            use the search_youtube tool for searching videos or tutorials
+            use the generate_image tool for generate_image
+            use the search_google tool to search for general info on google
+            use the website_retriever tool for any information for a particular website
+            use the get_listings_data tool only to retrieve listings information""",
+
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
