@@ -439,7 +439,7 @@ def get_listings_data(input: str):
     res=[]
     for hit in response['hits']['hits']:
         print(hit['_score'], hit['_source']['title'], hit['_source']['cached_est_mo_revenue'])
-        res.append(hit['_source']['title'])
+        res.append(hit['_source'])
 
     return res
 
