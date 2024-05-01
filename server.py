@@ -411,7 +411,7 @@ def load_mappings(file_path):
         return json.load(file)
     
 @tool
-def get_listing_info(input: str):
+def get_listings_data(input: str):
     """Use this tool to effortlessly give information about listings. """
 
     mappinngs = load_mappings('mappings.json')
@@ -442,7 +442,7 @@ def get_listing_info(input: str):
 
     return res
 
-tools = [keyword_trend, search_youtube, generate_image, search_google, website_retriever, get_listing_info]
+tools = [keyword_trend, search_youtube, generate_image, search_google, website_retriever, get_listings_data]
 
 prompt = ChatPromptTemplate.from_messages(
     [
