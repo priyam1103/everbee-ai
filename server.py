@@ -395,7 +395,8 @@ def search_google(keyword: str):
 @tool
 def website_retriever(site_url: str, input: str):
     """Use this tool to access a external websites link
-        capability to access specific details from any other external websites"""
+        capability to access specific details from any other external websites
+         don't use this as an api"""
     loader = WebBaseLoader(site_url)
     data = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
@@ -455,7 +456,7 @@ prompt = ChatPromptTemplate.from_messages(
             use the search_youtube tool for searching videos or tutorials
             use the generate_image tool for generate_image
             use the search_google tool to search for general info on google
-            use the website_retriever tool for any information for a particular website
+            use the website_retriever tool for any information for a particular website, don't use this as an api
             use the get_listings_data tool only to retrieve listings information""",
 
         ),
