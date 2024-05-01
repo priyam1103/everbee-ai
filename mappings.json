@@ -1,221 +1,547 @@
-{    "mappings": {
-    "properties": {
-    "approach": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
+
+    {
+        "mappings": {
+          "properties": {
+            "a_limit": {
+              "type": "long"
+            },
+            "access_secret": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "affiliate_cookie": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "approach": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "authentication_token": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "bogo": {
+              "type": "long"
+            },
+            "cached_conversion_rate": {
+              "type": "float"
+            },
+            "cached_data_updated_at": {
+              "type": "date"
+            },
+            "cached_est_mo_revenue": {
+              "type": "long"
+            },
+            "cached_est_mo_sales": {
+              "type": "long"
+            },
+            "cached_est_reviews": {
+              "type": "long"
+            },
+            "cached_est_reviews_in_months": {
+              "type": "long"
+            },
+            "cached_est_total_sales": {
+              "type": "long"
+            },
+            "cached_listing_age_in_months": {
+              "type": "long"
+            },
+            "cached_listing_rank_tracker": {
+              "type": "boolean"
+            },
+            "cached_tags_used": {
+              "type": "long"
+            },
+            "cached_title_character_count": {
+              "type": "long"
+            },
+            "cached_visibility_score": {
+              "type": "long"
+            },
+            "canceled": {
+              "type": "long"
+            },
+            "canceled_at": {
+              "type": "date"
+            },
+            "channel": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "clicked_first_time": {
+              "type": "boolean"
+            },
+            "clicked_second_time": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "type": "date"
+            },
+            "currency_code": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "default_currency_code": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "default_sales_channel_ids": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "digital_listing_count": {
+              "type": "long"
+            },
+            "email": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "email_beta": {
+              "type": "boolean"
+            },
+            "email_plan_price_id": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "email_visted_at": {
+              "type": "date"
+            },
+            "ext_version": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "fav_category": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "featured_rank": {
+              "type": "long"
+            },
+            "first_name": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "free_trail_end_date": {
+              "type": "date"
+            },
+            "google_id": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "has_all_scopes": {
+              "type": "boolean"
+            },
+            "has_variations": {
+              "type": "boolean"
+            },
+            "hide_details": {
+              "type": "boolean"
+            },
+            "ia_limit": {
+              "type": "long"
+            },
+            "icon_url_fullxfull": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "image": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "is_beta": {
+              "type": "boolean"
+            },
+            "is_consent_accepted": {
+              "type": "boolean"
+            },
+            "is_customizable": {
+              "type": "boolean"
+            },
+            "is_deactivated": {
+              "type": "boolean"
+            },
+            "is_disclaimer_accepted": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "is_etsy_ga_user": {
+              "type": "long"
+            },
+            "is_personalizable": {
+              "type": "boolean"
+            },
+            "is_seller": {
+              "type": "boolean"
+            },
+            "is_supply": {
+              "type": "boolean"
+            },
+            "keywords_count": {
+              "type": "long"
+            },
+            "last_feature_count_updated_at": {
+              "type": "date"
+            },
+            "last_name": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "listing_active_count": {
+              "type": "long"
+            },
+            "listing_id": {
+              "type": "long"
+            },
+            "listing_type": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "main_category": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "name": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "next_reminder_for_upgrade": {
+              "type": "date"
+            },
+            "num_favorers": {
+              "type": "long"
+            },
+            "on_free_trial": {
+              "type": "boolean"
+            },
+            "onboarding_flow": {
+              "type": "boolean"
+            },
+            "onboarding_step1_signup": {
+              "type": "boolean"
+            },
+            "onboarding_step2_connected_one_sales_channel": {
+              "type": "boolean"
+            },
+            "onboarding_step3_setting_up_sales_channel": {
+              "type": "boolean"
+            },
+            "password_digest": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "plan": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "price": {
+              "type": "float"
+            },
+            "pricing_page_category": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "processing_min": {
+              "type": "long"
+            },
+            "provider": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "quantity": {
+              "type": "long"
+            },
+            "reset_password_sent_at": {
+              "type": "date"
+            },
+            "reset_password_token": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "revenue": {
+              "type": "float"
+            },
+            "review_count": {
+              "type": "long"
+            },
+            "shipping_from_country_iso": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "shop_age_month": {
+              "type": "long"
+            },
+            "shop_id": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "shop_name": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "shop_receipts_updated_at": {
+              "type": "date"
+            },
+            "shop_section_id": {
+              "type": "long"
+            },
+            "should_auto_renew": {
+              "type": "boolean"
+            },
+            "state": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "stripe_customer_id": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "stripe_plan_updated_at": {
+              "type": "date"
+            },
+            "sub_category": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "subscribed_at": {
+              "type": "date"
+            },
+            "tags": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "title": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "token": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "total_sales": {
+              "type": "long"
+            },
+            "trademark_checked_at": {
+              "type": "date"
+            },
+            "trademark_rescanned_at": {
+              "type": "date"
+            },
+            "transaction_sold_count": {
+              "type": "long"
+            },
+            "trial_ended": {
+              "type": "boolean"
+            },
+            "updated_at": {
+              "type": "date"
+            },
+            "url": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "views": {
+              "type": "long"
+            },
+            "when_made": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "who_made": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
         }
-        }
-    },
-    "cached_conversion_rate": {
-        "type": "float"
-    },
-    "cached_data_updated_at": {
-        "type": "date"
-    },
-    "cached_est_mo_revenue": {
-        "type": "long"
-    },
-    "cached_est_mo_sales": {
-        "type": "long"
-    },
-    "cached_est_reviews": {
-        "type": "long"
-    },
-    "cached_est_reviews_in_months": {
-        "type": "long"
-    },
-    "cached_est_total_sales": {
-        "type": "long"
-    },
-    "cached_listing_age_in_months": {
-        "type": "long"
-    },
-    "cached_tags_used": {
-        "type": "long"
-    },
-    "cached_title_character_count": {
-        "type": "long"
-    },
-    "cached_visibility_score": {
-        "type": "long"
-    },
-    "created_at": {
-        "type": "date"
-    },
-    "currency_code": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "digital_listing_count": {
-        "type": "long"
-    },
-    "featured_rank": {
-        "type": "long"
-    },
-    "has_variations": {
-        "type": "boolean"
-    },
-    "is_customizable": {
-        "type": "boolean"
-    },
-    "is_personalizable": {
-        "type": "boolean"
-    },
-    "is_supply": {
-        "type": "boolean"
-    },
-    "listing_active_count": {
-        "type": "long"
-    },
-    "listing_id": {
-        "type": "long"
-    },
-    "listing_type": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "main_category": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "num_favorers": {
-        "type": "long"
-    },
-    "price": {
-        "type": "float"
-    },
-    "processing_min": {
-        "type": "long"
-    },
-    "quantity": {
-        "type": "long"
-    },
-    "review_count": {
-        "type": "long"
-    },
-    "shipping_from_country_iso": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "shop_age_month": {
-        "type": "long"
-    },
-    "shop_id": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "shop_name": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "shop_section_id": {
-        "type": "long"
-    },
-    "should_auto_renew": {
-        "type": "boolean"
-    },
-    "state": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "sub_category": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "tags": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "title": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "transaction_sold_count": {
-        "type": "long"
-    },
-    "url": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "views": {
-        "type": "long"
-    },
-    "when_made": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    },
-    "who_made": {
-        "type": "text",
-        "fields": {
-        "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-        }
-        }
-    }
-    }
-}
-}
+      }
