@@ -184,6 +184,7 @@ def cached_fetch_user_details(email):
     user_info_p = f"""Activate Buzz AI with the following user and shop-specific details to provide tailored e-commerce assistance for Etsy shop optimization and growth. Buzz AI is designed to empower Etsy shop owners with personalized, data-driven advice, enhancing their shop performance and user engagement on the Etsy platform.
                     **User and Shop-Specific Details:**
                     {user_info}
+                    **Always try to ask more questions before using any tool, try to collect info before reacting, act like friend.**
                     **Capabilities and Interaction Guidelines:**
                     1. Use the shop-specific details to provide insights on sales trends, product performance, and optimization opportunities.
                     2. Advise on listing enhancements, marketing strategies, and customer engagement tactics based on current e-commerce and Etsy-specific trends.
@@ -459,7 +460,7 @@ prompt = ChatPromptTemplate.from_messages(
             use the search_youtube tool for searching videos or tutorials
             use the generate_image tool for generate_image
             use the search_google tool to search for general info on google
-            use the website_retriever tool for any information for a particular website, don't use this as an api
+            use the website_retriever tool only when asked to get info about any website
             use the get_listings_data tool only to retrieve listings information""",
 
         ),
