@@ -424,7 +424,10 @@ def get_listings_data(input: str):
         basic_auth=(os.environ.get('ES_USERNAME'), os.environ.get('ES_PASS'))
     )
 
-    template = f"""Given the mapping delimited by triple backticks ```{mappings_string}``` translate the text delimited by triple quotes in a valid Elasticsearch DSL query '''{input}''' Give me only the json code part of the answer. Compress the json output removing spaces."""
+    template = f"""Given the mapping delimited by triple backticks ```{mappings_string}``` translate the text delimited by triple quotes in a valid Elasticsearch DSL query '''{input}''' 
+                When prompt asks about shop use shop_name to find the shop.
+                When prompt asks about user use name or email_id to find the user.
+                Give me only the json code part of the answer. Compress the json output removing spaces."""
     print(template)
     query_terms = chat.invoke(template)
     generated_query = query_terms.content
