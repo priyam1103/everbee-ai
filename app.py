@@ -2,6 +2,7 @@ import streamlit as st
 from openai import OpenAI
 import json
 import requests
+import os
 
 client = OpenAI(
   organization=os.environ.get('ORG'),
