@@ -407,7 +407,7 @@ def generate_html_page(navbar, content, hero_image_path):
     return html_template
 
 # Step 6: Main function to handle user input and generate the page
-def generate_landing_page_content(prompt):
+def generate_landing_page_content_data(prompt):
     # Get user input for the business description
     # business_description = input("Enter a description of your business: ")
     
@@ -442,7 +442,7 @@ user_prompt = st.text_area("Enter your prompt for the eCommerce landing page:", 
 if st.button("Generate Page"):
     if user_prompt:
         with st.spinner("Generating landing page content..."):
-            content = generate_landing_page_content(user_prompt)
+            content = generate_landing_page_content_data(user_prompt)
             if content:
                 html_output = generate_html_page(content)
                 
