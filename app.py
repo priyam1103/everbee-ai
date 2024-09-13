@@ -444,7 +444,7 @@ if st.button("Generate Page"):
         with st.spinner("Generating landing page content..."):
             content = generate_landing_page_content_data(user_prompt)
             if content:
-                html_output = generate_html_page(content)
+                html_output = content
                 
                 # Display HTML as iframe in Streamlit
                 st.components.v1.html(html_output, height=600, scrolling=True)
