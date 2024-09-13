@@ -432,13 +432,16 @@ def generate_landing_page_content_data(prompt):
     print("\nYour landing page with a hero image has been generated and saved as 'landing_page_with_image.html'.")
     return html_page
 
+# Adding Everbee logo (replace 'everbee_logo.png' with the actual file path or URL)
+st.image("https://everbee.io/wp-content/uploads/2024/05/Everbee-Logo.svg", width=150)
 
-# Streamlit UI
-st.title("E-Commerce Landing Page Generator")
+# App title with Everbee branding
+st.title("Everbee E-Commerce Site Generator")
 
 # User input prompt
-user_prompt = st.text_area("Enter your prompt for the eCommerce landing page:", "")
+user_prompt = st.text_area("Enter your prompt to generate an eCommerce landing page:", "")
 
+# Generate button and logic
 if st.button("Generate Page"):
     if user_prompt:
         with st.spinner("Generating landing page content..."):
@@ -447,10 +450,11 @@ if st.button("Generate Page"):
                 html_output = content
                 
                 # Display HTML as iframe in Streamlit
-                st.components.v1.html(html_output, height=600, scrolling=True)
+                st.components.v1.html(html_output, height=1000, scrolling=True)
             else:
                 st.error("Failed to generate content. Please try again.")
     else:
         st.warning("Please enter a prompt to generate the landing page.")
+
 
 
