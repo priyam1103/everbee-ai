@@ -16,3 +16,4 @@ bs4
 psycopg
 datetime
 elasticsearch
+streamlit==1.25.0
