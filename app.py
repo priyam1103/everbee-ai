@@ -450,7 +450,7 @@ if st.button("Generate Page"):
                 html_output = content
                 
                 # Display HTML as iframe in Streamlit
-                st.components.v1.html(html_output, height=1000, width=700, scrolling=True)
+                st.components.v1.html(html_output, height=1000, width=1200, scrolling=True)
             else:
                 st.error("Failed to generate content. Please try again.")
     else:
