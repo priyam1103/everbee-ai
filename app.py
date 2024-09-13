@@ -1,7 +1,6 @@
 import streamlit as st
 from openai import OpenAI
 import json
-from IPython.display import Image, display
 import requests
 
 client = OpenAI(
