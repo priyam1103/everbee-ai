@@ -257,7 +257,7 @@ if st.session_state['site_map']:
     st.components.v1.html(theme_two_html, height=300, width=1000, scrolling=True)
 
     # Let the user select a theme
-    selected_theme = st.selectbox("Choose a theme:", ["Select a theme", "Theme_1", "Theme_2"])
+    selected_theme = st.radio("Choose a theme:", ["Select a theme", "Theme_1", "Theme_2"])
 
     # Store the selected theme in session state
     if selected_theme != "Select a theme":
@@ -281,49 +281,49 @@ if st.session_state['selected_theme']:
 
 
 
-if st.button("Publish"):
-    # Save HTML to a file
-    file_name = "index.html"
-    with open(file_name, "w") as file:
-        file.write(html_output)
+# if st.button("Publish"):
+#     # Save HTML to a file
+#     file_name = "index.html"
+#     with open(file_name, "w") as file:
+#         file.write(html_output)
 
-    # Step 2: Set up Netlify API details
-    netlify_token = "your_netlify_personal_access_token"  # Replace with your Netlify token
+#     # Step 2: Set up Netlify API details
+#     netlify_token = "your_netlify_personal_access_token"  # Replace with your Netlify token
 
-    # API headers
-    headers = {
-        "Authorization": f"Bearer nfp_tHUp127t9CHRWKubPYoQsL5sfQDWXPkXaf4b",
-        "Content-Type": "application/json"
-    }
+#     # API headers
+#     headers = {
+#         "Authorization": f"Bearer nfp_tHUp127t9CHRWKubPYoQsL5sfQDWXPkXaf4b",
+#         "Content-Type": "application/json"
+#     }
 
-    # Step 3: Create a new site on Netlify
-    create_site_url = "https://api.netlify.com/api/v1/sites"
-    response = requests.post(create_site_url, headers=headers)
+#     # Step 3: Create a new site on Netlify
+#     create_site_url = "https://api.netlify.com/api/v1/sites"
+#     response = requests.post(create_site_url, headers=headers)
 
-    if response.status_code == 200:
-        site_info = response.json()
-        new_site_id = site_info["site_id"]
-        new_site_url = site_info["url"]
+#     if response.status_code == 200:
+#         site_info = response.json()
+#         new_site_id = site_info["site_id"]
+#         new_site_url = site_info["url"]
 
-        print(f"New site created with ID: {new_site_id}")
-        print(f"Site URL: {new_site_url}")
+#         print(f"New site created with ID: {new_site_id}")
+#         print(f"Site URL: {new_site_url}")
 
-        # Step 4: Deploy HTML content to the new site
-        deploy_url = f"https://api.netlify.com/api/v1/sites/{new_site_id}/deploys"
+#         # Step 4: Deploy HTML content to the new site
+#         deploy_url = f"https://api.netlify.com/api/v1/sites/{new_site_id}/deploys"
         
-        # Read the HTML file as binary to upload
-        with open(file_name, "rb") as file:
-            files = {
-                'files': (file_name, file, 'text/html')
-            }
-            deploy_response = requests.post(deploy_url, headers=headers, files=files)
+#         # Read the HTML file as binary to upload
+#         with open(file_name, "rb") as file:
+#             files = {
+#                 'files': (file_name, file, 'text/html')
+#             }
+#             deploy_response = requests.post(deploy_url, headers=headers, files=files)
 
-        if deploy_response.status_code == 200:
-            print(f"HTML deployed successfully! Your site is live at {new_site_url}")
-        else:
-            print(f"Failed to deploy HTML: {deploy_response.status_code} - {deploy_response.text}")
-    else:
-        print(f"Failed to create site: {response.status_code} - {response.text}")
+#         if deploy_response.status_code == 200:
+#             print(f"HTML deployed successfully! Your site is live at {new_site_url}")
+#         else:
+#             print(f"Failed to deploy HTML: {deploy_response.status_code} - {deploy_response.text}")
+#     else:
+#         print(f"Failed to create site: {response.status_code} - {response.text}")
     
 
 # # Generate button and logic
