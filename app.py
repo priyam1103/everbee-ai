@@ -221,6 +221,7 @@ scroll_js = """
 </script>
 """
 
+
 # Generate button and logic
 if st.button("Generate Page"):
     if user_prompt:
@@ -231,10 +232,13 @@ if st.button("Generate Page"):
             else:
                 st.error("Failed to generate content. Please try again.")
 
+        # Add JS for smooth scrolling (placeholder)
+        scroll_js = "<script>/* Add smooth scrolling */</script>"
         st.markdown(scroll_js, unsafe_allow_html=True)
 
         st.subheader("Select a theme for your landing page")
-        
+
+        # Load theme previews
         theme_one_html = load_html_file('theme1.html')
         theme_two_html = load_html_file('theme2.html')
 
@@ -247,23 +251,10 @@ if st.button("Generate Page"):
 
         if selected_theme == "Select a theme":
             st.warning("Please select a theme to proceed.")
-        elif selected_theme == "Theme 1":
-            # Handle Theme 1 logic
-            pass
-        elif selected_theme == "Theme 2":
-            # Handle Theme 2 logic
-            pass
-
-        # Ensure that no generation happens unless the user selects a theme
-        if selected_theme == "Select a theme":
-            st.warning("Please select a theme to proceed.")
         else:
             with st.spinner("Generating landing page..."):
                 # Generate content based on the selected theme
-                if selected_theme == "Theme 1":
-                    content = generate_landing_page_content_data(user_prompt, site_map, theme="theme1")
-                elif selected_theme == "Theme 2":
-                    content = generate_landing_page_content_data(user_prompt, site_map, theme="theme2")
+                content = generate_landing_page_content_data(user_prompt, site_map, theme=selected_theme.lower())
 
                 # Check if the content was successfully generated
                 if content:
@@ -274,6 +265,5 @@ if st.button("Generate Page"):
                     st.error("Failed to generate content. Please try again.")
     else:
         st.warning("Please enter a prompt to generate the landing page.")
-
 
 
