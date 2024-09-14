@@ -257,7 +257,7 @@ if st.session_state['site_map']:
     st.components.v1.html(theme_two_html, height=300, width=1000, scrolling=True)
 
     # Let the user select a theme
-    selected_theme = st.radio("Choose a theme:", ["Select a theme", "Theme_1", "Theme_2"])
+    selected_theme = st.radio("Choose a theme:", ["Select a theme", "Theme1", "Theme2"])
 
     # Store the selected theme in session state
     if selected_theme != "Select a theme":
