@@ -190,17 +190,20 @@ def generate_sitemap_ui(site_map):
         section_description = section['description']
         section_category = section['category']
         
-        # Render each section with a delay of 1 second
-        st.markdown(f"""
+        # Use st.empty to create a placeholder that will be updated
+        placeholder = st.empty()
+
+        # Update the placeholder with the new section HTML
+        placeholder.markdown(f"""
         <div>
             <h3 style="color: #007BFF;">{section_name}</h3>
             <p><strong>Category:</strong> {section_category}</p>
             <p>{section_description}</p>
         </div>
         """, unsafe_allow_html=True)
-        
-        # Introduce a delay of 1 second between sections
-        time.sleep(1)
+
+        # Introduce a delay of 1 second before the next section
+        time.sleep(0.5)
 
 # Adding Everbee logo (replace 'everbee_logo.png' with the actual file path or URL)
 st.image("https://everbee.io/wp-content/uploads/2024/05/Everbee-Logo.svg", width=150)
@@ -236,8 +239,8 @@ if st.button("Generate Page"):
         theme_two_html = load_html_file('theme2.html')
 
         # Display both theme previews as HTML
-        st.components.v1.html(theme_one_html, height=300, width=500, scrolling=True)
-        st.components.v1.html(theme_two_html, height=300, width=500, scrolling=True)
+        st.components.v1.html(theme_one_html, height=300, width=1000, scrolling=True)
+        st.components.v1.html(theme_two_html, height=300, width=1000, scrolling=True)
 
         # Let the user select a theme
         selected_theme = st.radio("Choose a theme:", ("Theme 1", "Theme 2"))
