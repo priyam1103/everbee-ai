@@ -174,7 +174,10 @@ def generate_landing_page_content_data(prompt, site_map, theme):
     print("\nYour landing page with a hero image has been generated and saved as 'landing_page_with_image.html'.")
     return html_page
 
-
+def load_html_file(file_path):
+    with open(file_path, 'r') as file:
+        return file.read()
+        
 def generate_sitemap_ui(site_map):
     """
     Generates an HTML representation of the sitemap for visual display in Streamlit.
