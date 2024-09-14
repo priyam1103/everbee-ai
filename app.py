@@ -253,20 +253,25 @@ if st.button("Generate Page"):
         elif selected_theme == "Theme 2":
             # Handle Theme 2 logic
             pass
-            
-        with st.spinner("Generating landing page..."):
-            if selected_theme == "Theme 1":
-                content = generate_landing_page_content_data(user_prompt, site_map, theme="theme1")
-            else:
-                content = generate_landing_page_content_data(user_prompt, site_map, theme="theme2")
 
-            if content:
-                html_output = content
-                
-                # Display HTML as iframe in Streamlit
-                st.components.v1.html(html_output, height=1000, width=1100, scrolling=True)
-            else:
-                st.error("Failed to generate content. Please try again.")
+        # Ensure that no generation happens unless the user selects a theme
+        if selected_theme == "Select a theme":
+            st.warning("Please select a theme to proceed.")
+        else:
+            with st.spinner("Generating landing page..."):
+                # Generate content based on the selected theme
+                if selected_theme == "Theme 1":
+                    content = generate_landing_page_content_data(user_prompt, site_map, theme="theme1")
+                elif selected_theme == "Theme 2":
+                    content = generate_landing_page_content_data(user_prompt, site_map, theme="theme2")
+
+                # Check if the content was successfully generated
+                if content:
+                    html_output = content
+                    # Display HTML as an iframe in Streamlit
+                    st.components.v1.html(html_output, height=1000, width=1100, scrolling=True)
+                else:
+                    st.error("Failed to generate content. Please try again.")
     else:
         st.warning("Please enter a prompt to generate the landing page.")
 
