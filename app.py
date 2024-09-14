@@ -177,7 +177,7 @@ def generate_landing_page_content_data(prompt, site_map, theme):
 def load_html_file(file_path):
     with open(file_path, 'r') as file:
         return file.read()
-        
+
 def generate_sitemap_ui(site_map):
     """
     Generates an HTML representation of the sitemap for visual display in Streamlit.
@@ -227,8 +227,8 @@ if st.button("Generate Page"):
 
         st.subheader("Select a theme for your landing page")
         
-        theme_one_html = load_html_file('path/to/theme1.html')
-        theme_two_html = load_html_file('path/to/theme2.html')
+        theme_one_html = load_html_file('/theme1.html')
+        theme_two_html = load_html_file('/theme2.html')
 
         # Display both theme previews as HTML
         st.components.v1.html(theme_one_html, height=300, width=500, scrolling=True)
