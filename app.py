@@ -222,48 +222,108 @@ scroll_js = """
 """
 
 
-# Generate button and logic
-if st.button("Generate Page"):
+
+# Check if the sitemap has been generated
+if 'site_map' not in st.session_state:
+    st.session_state['site_map'] = None
+
+# Check if the theme is selected
+if 'selected_theme' not in st.session_state:
+    st.session_state['selected_theme'] = None
+
+# Step 2: Generate the sitemap based on user input
+if st.button("Generate Sitemap"):
     if user_prompt:
         with st.spinner("Generating site map..."):
             site_map = generate_sitemap(user_prompt)
+            st.session_state['site_map'] = site_map
             if site_map:
                 generate_sitemap_ui(site_map)
             else:
-                st.error("Failed to generate content. Please try again.")
-
-        # Add JS for smooth scrolling (placeholder)
-        scroll_js = "<script>/* Add smooth scrolling */</script>"
-        st.markdown(scroll_js, unsafe_allow_html=True)
-
-        st.subheader("Select a theme for your landing page")
-
-        # Load theme previews
-        theme_one_html = load_html_file('theme1.html')
-        theme_two_html = load_html_file('theme2.html')
-
-        # Display both theme previews as HTML
-        st.components.v1.html(theme_one_html, height=300, width=1000, scrolling=True)
-        st.components.v1.html(theme_two_html, height=300, width=1000, scrolling=True)
-
-        # Let the user select a theme
-        selected_theme = st.radio("Choose a theme:", ("Select a theme", "Theme 1", "Theme 2"))
-
-        if selected_theme == "Select a theme":
-            st.warning("Please select a theme to proceed.")
-        else:
-            with st.spinner("Generating landing page..."):
-                # Generate content based on the selected theme
-                content = generate_landing_page_content_data(user_prompt, site_map, theme=selected_theme.lower())
-
-                # Check if the content was successfully generated
-                if content:
-                    html_output = content
-                    # Display HTML as an iframe in Streamlit
-                    st.components.v1.html(html_output, height=1000, width=1100, scrolling=True)
-                else:
-                    st.error("Failed to generate content. Please try again.")
+                st.error("Failed to generate the sitemap. Please try again.")
     else:
-        st.warning("Please enter a prompt to generate the landing page.")
+        st.warning("Please enter content to generate the sitemap.")
+
+# Step 3: If the sitemap is generated, let the user choose a theme
+if st.session_state['site_map']:
+    st.subheader("Select a theme for your landing page")
+
+    # Load theme previews (simulating loading HTML from external files)
+    theme_one_html = load_html_file('theme1.html')
+    theme_two_html = load_html_file('theme2.html')
+
+    # Display both theme previews as HTML
+    st.components.v1.html(theme_one_html, height=300, width=1000, scrolling=True)
+    st.components.v1.html(theme_two_html, height=300, width=1000, scrolling=True)
+
+    # Let the user select a theme
+    selected_theme = st.selectbox("Choose a theme:", ["Select a theme", "Theme 1", "Theme 2"])
+
+    # Store the selected theme in session state
+    if selected_theme != "Select a theme":
+        st.session_state['selected_theme'] = selected_theme
+    else:
+        st.warning("Please select a theme to proceed.")
+
+# Step 4: If a theme is selected, allow the user to generate the landing page
+if st.session_state['selected_theme']:
+    with st.spinner("Generating landing page..."):
+        # Generate content based on the selected theme
+        content = generate_landing_page_content_data(user_prompt, st.session_state['site_map'], theme=st.session_state['selected_theme'].lower())
+
+        # Check if the content was successfully generated
+        if content:
+            html_output = content
+            # Display HTML as an iframe in Streamlit
+            st.components.v1.html(html_output, height=1000, width=1100, scrolling=True)
+        else:
+            st.error("Failed to generate content. Please try again.")
+
+
+
+
+# # Generate button and logic
+# if st.button("Generate Page"):
+#     if user_prompt:
+#         with st.spinner("Generating site map..."):
+#             site_map = generate_sitemap(user_prompt)
+#             if site_map:
+#                 generate_sitemap_ui(site_map)
+#             else:
+#                 st.error("Failed to generate content. Please try again.")
+
+#         # Add JS for smooth scrolling (placeholder)
+#         scroll_js = "<script>/* Add smooth scrolling */</script>"
+#         st.markdown(scroll_js, unsafe_allow_html=True)
+
+#         st.subheader("Select a theme for your landing page")
+
+#         # Load theme previews
+#         theme_one_html = load_html_file('theme1.html')
+#         theme_two_html = load_html_file('theme2.html')
+
+#         # Display both theme previews as HTML
+#         st.components.v1.html(theme_one_html, height=300, width=1000, scrolling=True)
+#         st.components.v1.html(theme_two_html, height=300, width=1000, scrolling=True)
+
+#         # Let the user select a theme
+#         selected_theme = st.radio("Choose a theme:", ("Select a theme", "Theme 1", "Theme 2"))
+
+#         if selected_theme == "Select a theme":
+#             st.warning("Please select a theme to proceed.")
+#         else:
+#             with st.spinner("Generating landing page..."):
+#                 # Generate content based on the selected theme
+#                 content = generate_landing_page_content_data(user_prompt, site_map, theme=selected_theme.lower())
+
+#                 # Check if the content was successfully generated
+#                 if content:
+#                     html_output = content
+#                     # Display HTML as an iframe in Streamlit
+#                     st.components.v1.html(html_output, height=1000, width=1100, scrolling=True)
+#                 else:
+#                     st.error("Failed to generate content. Please try again.")
+#     else:
+#         st.warning("Please enter a prompt to generate the landing page.")
 
 
