@@ -6,7 +6,7 @@ def generate_html_page_one(navbar, content, prompt, generate_hero_image):
     cta = content["cta"]
     sections = content["sections"]
     theme = ["theme1", "theme2"]
-    selected_theme = random.choice(theme)
+    selected_theme = "theme1"
 
     # Initialize sections
     html_sections = ""

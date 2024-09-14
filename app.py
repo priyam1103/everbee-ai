@@ -150,7 +150,7 @@ def generate_hero_image(prompt_description, description = "hero_banner"):
     return image_url
 
 # Step 6: Main function to handle user input and generate the page
-def generate_landing_page_content_data(prompt, site_map):
+def generate_landing_page_content_data(prompt, site_map, theme):
     # Get user input for the business description
     # business_description = input("Enter a description of your business: ")
     
@@ -164,8 +164,7 @@ def generate_landing_page_content_data(prompt, site_map):
     # hero_image_path = "https://i.etsystatic.com/isbl/f8df64/62802669/isbl_3360x840.62802669_bfromjai.jpg?version=0"
     
     # Generate HTML
-    theme = ["theme1", "theme2"]
-    selected_theme = random.choice(theme)
+    selected_theme = theme
     html_page = generate_html_page_one(navbar, content, prompt, generate_hero_image) if selected_theme == "theme1" else generate_html_page_two(navbar, content, prompt, generate_hero_image)
     
     # Save the HTML to a file
@@ -223,8 +222,24 @@ if st.button("Generate Page"):
 
         st.markdown(scroll_js, unsafe_allow_html=True)
 
+        st.subheader("Select a theme for your landing page")
+        
+        theme_one_html = load_html_file('path/to/theme1.html')
+        theme_two_html = load_html_file('path/to/theme2.html')
+
+        # Display both theme previews as HTML
+        st.components.v1.html(theme_one_html, height=300, width=500, scrolling=True)
+        st.components.v1.html(theme_two_html, height=300, width=500, scrolling=True)
+
+        # Let the user select a theme
+        selected_theme = st.radio("Choose a theme:", ("Theme 1", "Theme 2"))
+
         with st.spinner("Generating landing page..."):
-            content = generate_landing_page_content_data(user_prompt, site_map)
+            if selected_theme == "Theme 1":
+                content = generate_landing_page_content_data(user_prompt, site_map, theme="theme1")
+            else:
+                content = generate_landing_page_content_data(user_prompt, site_map, theme="theme2")
+
             if content:
                 html_output = content
                 
