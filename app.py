@@ -447,7 +447,7 @@ user_prompt = st.text_area("Enter your prompt to generate an eCommerce landing p
 if st.button("Generate Page"):
     if user_prompt:
         with st.spinner("Generating site map and landing page..."):
-            site_map = generate_sitemap(prompt)
+            site_map = generate_sitemap(user_prompt)
             generate_sitemap_ui(site_map)
             content = generate_landing_page_content_data(user_prompt, site_map)
             if content:
