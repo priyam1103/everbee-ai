@@ -427,7 +427,7 @@ def generate_sitemap_ui(site_map):
         section_category = section['category']
         
         st.markdown(f"""
-        <div">
+        <div>
             <h3 style="color: #007BFF;">{section_name}</h3>
             <p><strong>Category:</strong> {section_category}</p>
             <p>{section_description}</p>
@@ -443,6 +443,13 @@ st.title("Everbee E-Commerce Site Generator")
 # User input prompt
 user_prompt = st.text_area("Enter your prompt to generate an eCommerce landing page:", "")
 
+# Scroll down JavaScript code
+scroll_js = """
+<script>
+    window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+</script>
+"""
+
 # Generate button and logic
 if st.button("Generate Page"):
     if user_prompt:
@@ -452,6 +459,9 @@ if st.button("Generate Page"):
                 generate_sitemap_ui(site_map)
             else:
                 st.error("Failed to generate content. Please try again.")
+                
+        st.markdown(scroll_js, unsafe_allow_html=True)
+
         with st.spinner("Generating landing page..."):
             content = generate_landing_page_content_data(user_prompt, site_map)
             if content:
