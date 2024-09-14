@@ -247,7 +247,7 @@ if st.button("Generate Page"):
         st.components.v1.html(theme_two_html, height=300, width=1000, scrolling=True)
 
         # Let the user select a theme
-        selected_theme = st.selectbox("Choose a theme:", ("Select a theme", "Theme 1", "Theme 2"))
+        selected_theme = st.radio("Choose a theme:", ("Select a theme", "Theme 1", "Theme 2"))
 
         if selected_theme == "Select a theme":
             st.warning("Please select a theme to proceed.")
