@@ -427,7 +427,7 @@ def generate_sitemap_ui(site_map):
         section_category = section['category']
         
         st.markdown(f"""
-        <div style="border: 1px solid #e0e0e0; padding: 15px; margin-bottom: 10px; border-radius: 8px; background-color: #f9f9f9;">
+        <div">
             <h3 style="color: #007BFF;">{section_name}</h3>
             <p><strong>Category:</strong> {section_category}</p>
             <p>{section_description}</p>
@@ -446,9 +446,13 @@ user_prompt = st.text_area("Enter your prompt to generate an eCommerce landing p
 # Generate button and logic
 if st.button("Generate Page"):
     if user_prompt:
-        with st.spinner("Generating site map and landing page..."):
+        with st.spinner("Generating site map..."):
             site_map = generate_sitemap(user_prompt)
-            generate_sitemap_ui(site_map)
+            if site_map:
+                generate_sitemap_ui(site_map)
+            else:
+                st.error("Failed to generate content. Please try again.")
+        with st.spinner("Generating landing page..."):
             content = generate_landing_page_content_data(user_prompt, site_map)
             if content:
                 html_output = content
