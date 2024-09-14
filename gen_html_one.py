@@ -1,6 +1,6 @@
 import random
 
-def generate_html_page_one(navbar, content, prompt):
+def generate_html_page_one(navbar, content, prompt, generate_hero_image):
     # Extract values from JSON
     tagline = content["tagline"]
     cta = content["cta"]

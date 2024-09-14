@@ -166,7 +166,7 @@ def generate_landing_page_content_data(prompt, site_map):
     # Generate HTML
     theme = ["theme1", "theme2"]
     selected_theme = random.choice(theme)
-    html_page = generate_html_page_one(navbar, content, prompt) if selected_theme == "theme1" else generate_html_page_two(navbar, content, prompt)
+    html_page = generate_html_page_one(navbar, content, prompt, generate_hero_image) if selected_theme == "theme1" else generate_html_page_two(navbar, content, prompt, generate_hero_image)
     
     # Save the HTML to a file
     # with open("landing_page_with_image.html", "w") as file:
