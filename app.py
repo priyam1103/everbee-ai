@@ -6,6 +6,7 @@ import os
 from gen_html_one import generate_html_page_one
 from gen_html_two import generate_html_page_two
 import random
+import time
 
 client = OpenAI(
   organization=os.environ.get('ORG'),
@@ -180,7 +181,7 @@ def load_html_file(file_path):
 
 def generate_sitemap_ui(site_map):
     """
-    Generates an HTML representation of the sitemap for visual display in Streamlit.
+    Generates an HTML representation of the sitemap for visual display in Streamlit with a delay to simulate real-time generation.
     """
     st.markdown("<h2 style='text-align: center; color: #4CAF50;'>Sitemap</h2>", unsafe_allow_html=True)
     
@@ -189,6 +190,7 @@ def generate_sitemap_ui(site_map):
         section_description = section['description']
         section_category = section['category']
         
+        # Render each section with a delay of 1 second
         st.markdown(f"""
         <div>
             <h3 style="color: #007BFF;">{section_name}</h3>
@@ -196,6 +198,9 @@ def generate_sitemap_ui(site_map):
             <p>{section_description}</p>
         </div>
         """, unsafe_allow_html=True)
+        
+        # Introduce a delay of 1 second between sections
+        time.sleep(1)
 
 # Adding Everbee logo (replace 'everbee_logo.png' with the actual file path or URL)
 st.image("https://everbee.io/wp-content/uploads/2024/05/Everbee-Logo.svg", width=150)
@@ -227,8 +232,8 @@ if st.button("Generate Page"):
 
         st.subheader("Select a theme for your landing page")
         
-        theme_one_html = load_html_file('/theme1.html')
-        theme_two_html = load_html_file('/theme2.html')
+        theme_one_html = load_html_file('theme1.html')
+        theme_two_html = load_html_file('theme2.html')
 
         # Display both theme previews as HTML
         st.components.v1.html(theme_one_html, height=300, width=500, scrolling=True)
